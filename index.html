@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart T-Shirt Readings</title>
+    <script>
+        function getData() {
+            fetch('http://192.168.4.1/getData')  // طلب البيانات من ESP32
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('heartRate').innerHTML = data.heartRate;
+                    document.getElementById('oxygenLevel').innerHTML = data.oxygenLevel;
+                    document.getElementById('glucoseLevel').innerHTML = data.glucoseLevel;
+                    document.getElementById('bloodPressure').innerHTML = data.bloodPressure;
+                })
+                .catch(error => console.log(error));
+        }
+
+        // تحديث البيانات كل 2 ثانية
+        setInterval(getData, 2000);
+    </script>
+</head>
+
+<body>
+    <h1>Smart T-Shirt Sensor Readings</h1>
+    <p>Heart Rate: <span id="heartRate"></span> BPM</p>
+    <p>Oxygen Level: <span id="oxygenLevel"></span>%</p>
+    <p>Glucose Level: <span id="glucoseLevel"></span> mmol/L</p>
+    <p>Blood Pressure: <span id="bloodPressure"></span> mmHg</p>
+</body>
+
+</html>
